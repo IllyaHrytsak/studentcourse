@@ -39,8 +39,7 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
                 return true;
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -58,8 +57,7 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
             LOGGER.info("Student was inserted into course with id " + courseId);
             return (long) code;
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }  finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -80,8 +78,7 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }  finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -100,8 +97,7 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
                 return true;
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }  finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }

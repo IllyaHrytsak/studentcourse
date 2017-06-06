@@ -47,8 +47,7 @@ public class MySqlUserDAO implements UserDAO {
             }
             LOGGER.info("List of all users was found");
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -69,8 +68,7 @@ public class MySqlUserDAO implements UserDAO {
             LOGGER.info("User was inserted " + user.getName());
             return (long) userId;
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -91,8 +89,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -117,7 +114,7 @@ public class MySqlUserDAO implements UserDAO {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }  finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -137,8 +134,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -161,8 +157,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -185,8 +180,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -206,8 +200,7 @@ public class MySqlUserDAO implements UserDAO {
             setUserType(resultSet.getLong(COLUMN_USER_TYPE_ID), user);
             LOGGER.info("User was created " + user.getLogin());
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }
         return user;
     }
@@ -228,8 +221,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -251,8 +243,7 @@ public class MySqlUserDAO implements UserDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }

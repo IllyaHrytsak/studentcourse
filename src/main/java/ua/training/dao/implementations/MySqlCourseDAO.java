@@ -43,8 +43,7 @@ public class MySqlCourseDAO implements CourseDAO {
             }
             LOGGER.info("List of all courses was found");
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -63,8 +62,7 @@ public class MySqlCourseDAO implements CourseDAO {
             LOGGER.info("Course was inserted " + course.getNameCourse());
             return (long) courseId;
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -85,8 +83,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -106,8 +103,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -128,8 +124,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 return true;
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -154,8 +149,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 LOGGER.info("Students were found for courseId " + courseId);
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -179,8 +173,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 LOGGER.info("Courses were found for userId " + userId);
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -197,8 +190,7 @@ public class MySqlCourseDAO implements CourseDAO {
             setUserListToCourse(resultSet.getLong(COLUMN_COURSE_ID), course);
             LOGGER.info("Course was created " + course.getNameCourse());
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }
         return course;
     }
@@ -217,8 +209,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 LOGGER.info("Users were added for course " + course.getNameCourse());
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -236,8 +227,7 @@ public class MySqlCourseDAO implements CourseDAO {
             setUserType(resultSet.getLong(COLUMN_USER_TYPE), user);
             LOGGER.info("User was created " + user.getLogin());
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }
         return user;
     }
@@ -257,8 +247,7 @@ public class MySqlCourseDAO implements CourseDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }

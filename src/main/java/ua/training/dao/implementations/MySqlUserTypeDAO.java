@@ -46,8 +46,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
 
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -64,8 +63,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
             LOGGER.info("User types was inserted " + userType.getUserTypeName());
             return (long) code;
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -89,8 +87,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -115,8 +112,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -137,8 +133,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
                 return true;
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
@@ -165,8 +160,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.warning("exception" + e);
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }

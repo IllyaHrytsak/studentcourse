@@ -6,8 +6,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Interface for realization GoF Pattern 'Command'
+ * @author Illya Hrytsak
+ */
 public interface ICommand {
 
+    /**
+     *
+     *
+     * @param request gets http request from servlet
+     * @param response gets http response from servlet
+     * @return string which has address of jsp page
+     * @throws ServletException notifies us that problem in servlet
+     * @throws IOException notifies us that problem in input or output stream
+     */
     String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
 }

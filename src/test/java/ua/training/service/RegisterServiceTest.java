@@ -20,7 +20,7 @@ public class RegisterServiceTest {
     @Test
     public void testWrongInputPassword() {
         RegisterService registerService = Service.getInstance().getRegisterService();
-        String login = "admin";
+        String login = "ivanpetrovich";
         String password = "1";
         String name = "Illya";
         String surname = "Hrytsak";
