@@ -13,8 +13,7 @@ import java.io.IOException;
 public interface ICommand {
 
     /**
-     *
-     *
+     * This method returns address of jsp pages, which will be forwarded by servlet
      * @param request gets http request from servlet
      * @param response gets http response from servlet
      * @return string which has address of jsp page
