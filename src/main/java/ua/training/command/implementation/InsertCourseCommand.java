@@ -1,6 +1,8 @@
-package ua.training.command;
+package ua.training.command.implementation;
 
 
+import ua.training.command.Command;
+import ua.training.command.HelperCommand;
 import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
@@ -13,31 +15,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CommandJoinCourse implements ICommand {
-
-    private static final String COURSE_ID = "courseId";
-    private static final String STUDENT_ID = "studentId";
+public class InsertCourseCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
-        String courseId = request.getParameter(COURSE_ID);
-        String userId = request.getParameter(STUDENT_ID);
+        String courseName = request.getParameter("newNameCourse");
+        String userId = request.getParameter("userId");
         User user = (User) request.getSession().getAttribute("user");
         CourseService courseService = Service.getInstance().getCourseService();
         LoginService loginService = Service.getInstance().getLoginService();
         if (user != null) {
+            HelperCommand commandHelper = HelperCommand.getInstance();
             String login = user.getLogin();
             String password = user.getPassword();
-            CommandHelper commandHelper = CommandHelper.getInstance();
-            if (courseService.insertStudent(courseId, userId)) {
-                user = loginService.findStudent(login, password);
-                commandHelper.setStudentPage(request.getSession(), user);
-                page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
-
+            if (courseService.insertCourse(courseName, userId)) {
+                if ((user = loginService.findLecturer(login, password)) != null)
+                commandHelper.setLecturerPage(request.getSession(), user);
+                page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
             } else {
-                request.setAttribute("error",
-                        Message.getInstance().getProperty(Message.JOIN_COURSE_ERROR));
+                request.getSession().setAttribute("error",
+                        Message.getInstance().getProperty(Message.COURSE_NAME_ERROR));
                 page = Config.getInstance().getProperty(Config.ERROR);
             }
         } else {
@@ -45,4 +43,5 @@ public class CommandJoinCourse implements ICommand {
         }
         return page;
     }
+
 }

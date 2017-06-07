@@ -7,6 +7,7 @@ import ua.training.dao.interfaces.UserDAO;
 import ua.training.entity.Course;
 import ua.training.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginService {
@@ -36,6 +37,9 @@ public class LoginService {
     }
 
     public List<User> getStudentsWhereCourse(List<Course> courses) {
+        if (courses.isEmpty()) {
+            return new ArrayList<>();
+        }
         return courseDAO.findWhereUserIsStudent(courses.get(0).getCourseId());
     }
 
@@ -46,7 +50,6 @@ public class LoginService {
     public List<Course> getStudentCourses(Long userId) {
         return courseDAO.findStudentCourses(userId);
     }
-
 
 
 }

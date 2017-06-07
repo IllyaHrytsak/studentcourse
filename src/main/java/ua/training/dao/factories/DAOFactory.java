@@ -11,8 +11,11 @@ public abstract class DAOFactory {
     public static final int MYSQL = 1;
 
     public abstract CourseDAO getCourseDAO();
+
     public abstract UserDAO getUserDAO();
+
     public abstract UserStoreDAO getUserStoreDAO();
+
     public abstract UserTypeDAO getUserTypeDAO();
 
     public static DAOFactory getDAOFactory(int whichFactory) {

@@ -10,6 +10,7 @@ public class ShowAuthorTag extends TagSupport {
 
 
     private static final Logger LOGGER = Logger.getLogger(ShowAuthorTag.class.getSimpleName());
+
     @Override
     public int doStartTag() throws JspException {
         try {

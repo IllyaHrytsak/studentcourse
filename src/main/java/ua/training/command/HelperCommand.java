@@ -8,15 +8,16 @@ import ua.training.service.Service;
 
 import javax.servlet.http.HttpSession;
 
-public class CommandHelper {
+public class HelperCommand {
 
-    private static CommandHelper instance;
+    private static HelperCommand instance;
 
-    private CommandHelper() {}
+    private HelperCommand() {
+    }
 
-    public static CommandHelper getInstance() {
+    public static HelperCommand getInstance() {
         if (instance == null) {
-            instance = new CommandHelper();
+            instance = new HelperCommand();
         }
         return instance;
     }
@@ -48,7 +49,7 @@ public class CommandHelper {
         } else {
             user = loginService.findStudent(login, password);
             setStudentPage(session, user);
-            page =  Config.getInstance().getProperty(Config.STUDENT_MAIN);
+            page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
         }
         return page;
     }

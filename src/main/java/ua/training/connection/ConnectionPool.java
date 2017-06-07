@@ -58,11 +58,10 @@ public class ConnectionPool {
             Class.forName(Config.getInstance().getProperty(Config.DRIVER));
             connection = DriverManager.getConnection(Config.getInstance().getProperty(Config.URL));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
         }
         return connection;
     }
-
 
 
 }

@@ -41,4 +41,8 @@ public interface UserStoreDAO {
      */
     boolean removeStudent(Long courseId, Long userId);
 
+    boolean removeCourse(Long courseId);
+
+    boolean findLecturer(Long userId);
+
 }

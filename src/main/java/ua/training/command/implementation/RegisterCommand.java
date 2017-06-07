@@ -1,6 +1,7 @@
-package ua.training.command;
+package ua.training.command.implementation;
 
 
+import ua.training.command.Command;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
 import ua.training.service.RegisterService;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CommandRegister implements ICommand {
+public class RegisterCommand implements Command {
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";

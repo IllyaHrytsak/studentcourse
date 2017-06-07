@@ -18,9 +18,11 @@ public class Service {
     public LoginService getLoginService() {
         return LoginService.getInstance();
     }
+
     public RegisterService getRegisterService() {
         return RegisterService.getInstance();
     }
+
     public CourseService getCourseService() {
         return CourseService.getInstance();
     }

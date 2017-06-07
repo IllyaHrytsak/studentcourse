@@ -27,6 +27,28 @@ public class CourseService {
         return instance;
     }
 
+    public boolean insertCourse(String nameCourse, String userId) {
+
+        if (!checkNameCourse(nameCourse)) {
+            return false;
+        }
+
+        Course findCourse = courseDAO.findCourseWithCourseName(nameCourse);
+        if (findCourse != null) {
+            return false;
+        }
+
+        Course course = new Course();
+        course.setNameCourse(nameCourse);
+        long courseId = courseDAO.insertCourse(course);
+        if (courseId == -1) {
+            return false;
+        }
+        Course findNewCourse = courseDAO.findCourseWithCourseName(nameCourse);
+        userStoreDAO.insertStudentIntoCourse(findNewCourse.getCourseId(), Long.parseLong(userId));
+        return true;
+    }
+
     public boolean changeNameCourse(String nameCourse, String courseId) {
         Course findCourse = courseDAO.findCourseWithCourseId(Long.parseLong(courseId));
         if (findCourse == null) {
@@ -40,6 +62,16 @@ public class CourseService {
         newCourse.setNameCourse(nameCourse);
         courseDAO.updateCourse(newCourse);
         return true;
+    }
+
+    public boolean removeCourse(String courseId) {
+        boolean result = userStoreDAO.removeCourse(Long.parseLong(courseId));
+        if (!result) {
+            return false;
+        }
+        result = courseDAO.removeCourseByCourseId(Long.parseLong(courseId));
+        ;
+        return result;
     }
 
     public Integer findMark(String courseId, String userId) {

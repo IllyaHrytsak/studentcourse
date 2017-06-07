@@ -1,7 +1,7 @@
 package ua.training.controller;
 
 
-import ua.training.command.ICommand;
+import ua.training.command.Command;
 import ua.training.manager.Message;
 
 import javax.servlet.RequestDispatcher;
@@ -10,24 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class Controller extends HttpServlet {
 
     private ControllerHelper controllerHelper = ControllerHelper.getInstance();
+    private static final Logger LOGGER = Logger.getLogger(Controller.class.getSimpleName());
 
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException  {
+            throws ServletException, IOException {
         String page = null;
         try {
-            ICommand command = controllerHelper.getCommand(request,response);
+            Command command = controllerHelper.getCommand(request, response);
             page = command.execute(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
             request.setAttribute("messageError", Message.getInstance().getProperty(Message.SERVLET_EXCEPTION));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning("Exception: " + e.getMessage());
             request.setAttribute("messageError", Message.getInstance().getProperty(Message.IO_EXCEPTION));
 
         }

@@ -61,11 +61,11 @@ public class UserStore implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Course name: ")
-                    .append(relationshipCourse.getNameCourse())
-                    .append(", student login: ")
-                    .append(relationshipUser.getLogin())
-                    .append(", mark: ")
-                    .append((mark != null) ? mark : "");
+                .append(relationshipCourse.getNameCourse())
+                .append(", student login: ")
+                .append(relationshipUser.getLogin())
+                .append(", mark: ")
+                .append((mark != null) ? mark : "");
         return stringBuilder.toString();
     }
 }

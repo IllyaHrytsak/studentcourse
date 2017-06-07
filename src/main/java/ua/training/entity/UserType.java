@@ -62,9 +62,9 @@ public class UserType implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("User type id - ")
-                    .append(userTypeId)
-                    .append(", user type name - ")
-                    .append(userTypeName);
+                .append(userTypeId)
+                .append(", user type name - ")
+                .append(userTypeName);
         return stringBuilder.toString();
     }
 }

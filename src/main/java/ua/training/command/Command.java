@@ -10,7 +10,7 @@ import java.io.IOException;
  * Interface for realization GoF Pattern 'Command'
  * @author Illya Hrytsak
  */
-public interface ICommand {
+public interface Command {
 
     /**
      * This method returns address of jsp pages, which will be forwarded by servlet

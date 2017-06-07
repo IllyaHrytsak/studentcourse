@@ -64,9 +64,9 @@ public class Course implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Course id - ")
-                    .append(courseId)
-                    .append(", Course name - ")
-                    .append(nameCourse);
+                .append(courseId)
+                .append(", Course name - ")
+                .append(nameCourse);
         return stringBuilder.toString();
     }
 }

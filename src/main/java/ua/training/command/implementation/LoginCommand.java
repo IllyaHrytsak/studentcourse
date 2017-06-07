@@ -1,6 +1,8 @@
-package ua.training.command;
+package ua.training.command.implementation;
 
 
+import ua.training.command.Command;
+import ua.training.command.HelperCommand;
 import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class CommandLogin implements ICommand {
+public class LoginCommand implements Command {
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
@@ -22,13 +24,13 @@ public class CommandLogin implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        session.setMaxInactiveInterval(30);
+        session.setMaxInactiveInterval(90);
         String page = null;
         User user = null;
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
         LoginService loginService = Service.getInstance().getLoginService();
-        CommandHelper commandHelper = CommandHelper.getInstance();
+        HelperCommand commandHelper = HelperCommand.getInstance();
         if ((user = loginService.findLecturer(login, password)) != null) {
             commandHelper.setLecturerPage(session, user);
             page = Config.getInstance().getProperty(Config.LECTURER_MAIN);

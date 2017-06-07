@@ -61,4 +61,10 @@ public interface CourseDAO {
      */
     List<Course> findStudentCourses(Long userId);
 
+    boolean removeCourseByCourseId(Long courseId);
+
+
+
 }
+
+

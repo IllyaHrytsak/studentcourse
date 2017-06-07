@@ -19,7 +19,8 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
     private static final int COLUMN_USER_TYPE = 2;
     private static final Logger LOGGER = Logger.getLogger(MySqlUserTypeDAO.class.getSimpleName());
 
-    private MySqlUserTypeDAO(){}
+    private MySqlUserTypeDAO() {
+    }
 
     public static synchronized MySqlUserTypeDAO getInstance() {
         if (instance == null) {
@@ -34,7 +35,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
         final String sql = "SELECT * FROM USER_TYPE;";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 UserType userType = new UserType();
                 long userTypeId = resultSet.getLong(COLUMN_USER_TYPE_ID);
@@ -75,7 +76,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
         final String sql = "SELECT * FROM USER_TYPE WHERE user_type_id=?";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1,userTypeId);
+            preparedStatement.setLong(1, userTypeId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     UserType findUserType = new UserType();
@@ -99,7 +100,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
         final String sql = "SELECT * FROM USER_TYPE WHERE user_type=?";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1,userTypeName);
+            preparedStatement.setString(1, userTypeName);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     UserType findUserType = new UserType();

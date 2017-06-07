@@ -1,5 +1,8 @@
-package ua.training.command;
+package ua.training.command.implementation;
 
+
+import ua.training.command.Command;
+import ua.training.command.HelperCommand;
 import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
@@ -12,31 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+public class DeleteCourseCommand implements Command {
 
-public class CommandNameCourse implements ICommand {
-
-    private static final String COURSE_ID = "courseId";
-    private static final String NEW_NAME_COURSE = "nameCourse";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = null;
-        String nameCourse = request.getParameter(NEW_NAME_COURSE);
-        String courseId = request.getParameter(COURSE_ID);
+        String courseId = request.getParameter("courseId");
         User user = (User) request.getSession().getAttribute("user");
         CourseService courseService = Service.getInstance().getCourseService();
         LoginService loginService = Service.getInstance().getLoginService();
         if (user != null) {
+            HelperCommand commandHelper = HelperCommand.getInstance();
             String login = user.getLogin();
             String password = user.getPassword();
-            CommandHelper commandHelper = CommandHelper.getInstance();
-            if (courseService.changeNameCourse(nameCourse, courseId)) {
-                user = loginService.findLecturer(login, password);
-                commandHelper.setLecturerPage(request.getSession(), user);
-                page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
+            if (courseService.removeCourse(courseId)) {
+                if ((user = loginService.findLecturer(login, password)) != null) {
+                    commandHelper.setLecturerPage(request.getSession(), user);
+                    page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
+                }
             } else {
-                request.setAttribute("error",
-                        Message.getInstance().getProperty(Message.COURSE_NAME_ERROR));
+                request.getSession().setAttribute("error",
+                        Message.getInstance().getProperty(Message.REMOVE_ERROR));
                 page = Config.getInstance().getProperty(Config.ERROR);
             }
         } else {

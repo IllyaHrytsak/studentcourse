@@ -107,16 +107,16 @@ public class User implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("User: [FullName - ")
-                    .append(name)
-                    .append(" ")
-                    .append(surname)
-                    .append(", login: ")
-                    .append(login)
-                    .append(", password: ")
-                    .append(password)
-                    .append("]");
+                .append(name)
+                .append(" ")
+                .append(surname)
+                .append(", login: ")
+                .append(login)
+                .append(", password: ")
+                .append(password)
+                .append("]");
         return stringBuilder.toString();
-}
+    }
 
 
 }

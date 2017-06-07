@@ -22,7 +22,8 @@ public class MySqlCourseDAO implements CourseDAO {
     private static final int COLUMN_USER_TYPE = 2;
     private static final int USER_TYPE_STUDENT = 2;
 
-    private MySqlCourseDAO() {}
+    private MySqlCourseDAO() {
+    }
 
     public static synchronized MySqlCourseDAO getInstance() {
         if (instance == null) {
@@ -36,8 +37,8 @@ public class MySqlCourseDAO implements CourseDAO {
         List<Course> courses = new ArrayList<>();
         final String sql = "SELECT * FROM COURSE;";
         Connection connection = ConnectionPool.getInstance().getConnection();
-        try(Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql)) {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 courses.add(createCourse(resultSet));
             }
@@ -51,12 +52,11 @@ public class MySqlCourseDAO implements CourseDAO {
     }
 
 
-
     @Override
     public Long insertCourse(Course course) {
         final String sql = "INSERT INTO COURSE(course_name) values(?)";
         Connection connection = ConnectionPool.getInstance().getConnection();
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, course.getNameCourse());
             int courseId = preparedStatement.executeUpdate();
             LOGGER.info("Course was inserted " + course.getNameCourse());
@@ -132,7 +132,6 @@ public class MySqlCourseDAO implements CourseDAO {
     }
 
 
-
     @Override
     public List<User> findWhereUserIsStudent(Long courseId) {
         List<User> users = new ArrayList<>();
@@ -142,7 +141,7 @@ public class MySqlCourseDAO implements CourseDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             preparedStatement.setLong(1, courseId);
             preparedStatement.setLong(2, USER_TYPE_STUDENT);
-            try (ResultSet resultSet = preparedStatement.executeQuery()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     users.add(createUser(resultSet));
                 }
@@ -157,7 +156,6 @@ public class MySqlCourseDAO implements CourseDAO {
     }
 
 
-
     @Override
     public List<Course> findStudentCourses(Long userId) {
         List<Course> courses = new ArrayList<>();
@@ -166,7 +164,7 @@ public class MySqlCourseDAO implements CourseDAO {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             preparedStatement.setLong(1, userId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     courses.add(createCourse(resultSet));
                 }
@@ -180,6 +178,24 @@ public class MySqlCourseDAO implements CourseDAO {
         return courses;
     }
 
+
+    public boolean removeCourseByCourseId(Long courseId) {
+        final String sql = "DELETE FROM COURSE WHERE course_id=?";
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, courseId);
+            int code = preparedStatement.executeUpdate();
+            if (code != -1) {
+                LOGGER.info("Course was removed " + courseId);
+                return true;
+            }
+        } catch (SQLException e) {
+            LOGGER.warning("Exception: " + e.getMessage());
+        } finally {
+            ConnectionPool.getInstance().putBackConnection(connection);
+        }
+        return false;
+    }
 
 
     private Course createCourse(ResultSet resultSet) {
