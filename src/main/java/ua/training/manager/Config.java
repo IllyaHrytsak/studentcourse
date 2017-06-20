@@ -14,6 +14,7 @@ public class Config {
     public static final String STUDENT_MAIN = "STUDENT_MAIN";
     public static final String ERROR = "ERROR";
     public static final String LOGIN = "LOGIN";
+    public static final String REGISTER_ERROR = "REGISTER_ERROR";
     public static final String SESSION_TIME = "SESSION_TIME";
 
     public static Config getInstance() {

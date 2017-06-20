@@ -23,10 +23,10 @@ public class RegisterCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = null;
-        String login = request.getParameter(LOGIN);
+        String login = request.getParameter(LOGIN).trim();
         String password = request.getParameter(PASSWORD);
-        String name = request.getParameter(NAME);
-        String surname= request.getParameter(SURNAME);
+        String name = request.getParameter(NAME).trim();
+        String surname= request.getParameter(SURNAME).trim();
         RegisterService registerService = Service.getInstance().getRegisterService();
         if (registerService.inputStudent(login, password, name, surname)) {
             page = Config.getInstance().getProperty(Config.LOGIN);
