@@ -74,6 +74,7 @@
             <input type="hidden" name="studentName" value="${student.name}">
             <input type="hidden" name="studentSurname" value="${student.surname}">
             <fmt:message key="login.label.username" var="loginValue"/>
+            <fmt:message key="lecturer_main.message.full_name" var="fullNameValue"/>
             <c:out value="${loginValue}: [${student.login}]
                                   ${fullNameValue}: [${student.name} ${student.surname}]"/>
             <fmt:message key="main.message.mark" var="markValue"/>

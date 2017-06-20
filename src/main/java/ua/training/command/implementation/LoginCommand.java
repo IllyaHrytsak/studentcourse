@@ -19,12 +19,14 @@ public class LoginCommand implements Command {
 
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
+    private static final String SESSION_TIME = Config.getInstance().getProperty(Config.SESSION_TIME);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        session.setMaxInactiveInterval(90);
+        int sessionTime = Integer.parseInt(SESSION_TIME);
+        session.setMaxInactiveInterval(sessionTime);
         String page = null;
         User user = null;
         String login = request.getParameter(LOGIN);

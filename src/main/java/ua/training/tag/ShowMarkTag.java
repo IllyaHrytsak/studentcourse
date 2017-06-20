@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 public class ShowMarkTag extends BodyTagSupport {
 
+    private static final String NO_MARK = "No mark";
+    private static final int ZERO = 0;
     private String userId;
     private String courseId;
     private CourseService courseService = Service.getInstance().getCourseService();
@@ -30,8 +32,8 @@ public class ShowMarkTag extends BodyTagSupport {
     public int doStartTag() throws JspException {
         Integer mark = courseService.findMark(courseId, userId);
         try {
-            if (mark.equals(0)) {
-                pageContext.getOut().print("No mark");
+            if (mark.equals(ZERO)) {
+                pageContext.getOut().print(NO_MARK);
             } else {
                 pageContext.getOut().print(mark);
             }
