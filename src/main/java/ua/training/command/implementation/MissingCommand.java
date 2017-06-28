@@ -23,8 +23,8 @@ public class MissingCommand implements Command {
         String page = null;
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
-            HelperCommand commandHelper = HelperCommand.getInstance();
-            page = commandHelper.checkUser(request.getSession(), user);
+            HelperCommand helperCommand = HelperCommand.getInstance();
+            page = helperCommand.checkUser(request.getSession(), user);
         } else {
             page = Config.getInstance().getProperty(Config.LOGIN);
         }

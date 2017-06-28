@@ -53,20 +53,20 @@ public class MySqlCourseDAO implements CourseDAO {
 
 
     @Override
-    public Long insertCourse(Course course) {
+    public boolean insertCourse(Course course) {
         final String sql = "INSERT INTO COURSE(course_name) values(?)";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, course.getNameCourse());
-            int courseId = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             LOGGER.info("Course was inserted " + course.getNameCourse());
-            return (long) courseId;
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
-        return -1L;
+        return false;
     }
 
 
@@ -119,10 +119,8 @@ public class MySqlCourseDAO implements CourseDAO {
             preparedStatement.setString(1, course.getNameCourse());
             preparedStatement.setLong(2, courseId);
             int i = preparedStatement.executeUpdate();
-            if (i != -1) {
-                LOGGER.info("Course was updated " + course.getNameCourse());
-                return true;
-            }
+            LOGGER.info("Course was updated " + course.getNameCourse());
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -184,11 +182,9 @@ public class MySqlCourseDAO implements CourseDAO {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, courseId);
-            int code = preparedStatement.executeUpdate();
-            if (code != -1) {
-                LOGGER.info("Course was removed " + courseId);
-                return true;
-            }
+            preparedStatement.executeUpdate();
+            LOGGER.info("Course was removed " + courseId);
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -222,13 +218,13 @@ public class MySqlCourseDAO implements CourseDAO {
                 while (resultSet.next()) {
                     users.add(createUser(resultSet));
                 }
-                LOGGER.info("Users were added for course " + course.getNameCourse());
             }
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
+        LOGGER.info("Users were added for course " + course.getNameCourse());
         course.setUserStore(users);
     }
 
@@ -250,7 +246,7 @@ public class MySqlCourseDAO implements CourseDAO {
 
 
     private void setUserType(Long userTypeId, User user) {
-        String sql = "SELECT user_type FROM USER_TYPE WHERE user_type_id=?;";
+        final String sql = "SELECT user_type FROM USER_TYPE WHERE user_type_id=?;";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, userTypeId);

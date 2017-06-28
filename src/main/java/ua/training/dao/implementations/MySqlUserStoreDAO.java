@@ -34,11 +34,10 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
             preparedStatement.setInt(1, mark);
             preparedStatement.setLong(2, courseId);
             preparedStatement.setLong(3, userId);
-            int code = preparedStatement.executeUpdate();
-            if (code != -1) {
-                LOGGER.info("Mark was inserted to user with id " + userId);
-                return true;
-            }
+            preparedStatement.executeUpdate();
+            LOGGER.info("Mark was inserted to user with id " + userId);
+            return true;
+
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -48,7 +47,7 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
     }
 
     @Override
-    public Long insertStudentIntoCourse(Long courseId, Long userId) {
+    public boolean insertStudentIntoCourse(Long courseId, Long userId) {
         final String sql = "INSERT INTO USER_STORE(course_id, user_id) VALUES(?,?);";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -56,18 +55,18 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
             preparedStatement.setLong(2, userId);
             int code = preparedStatement.executeUpdate();
             LOGGER.info("Student was inserted into course with id " + courseId);
-            return (long) code;
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
-        return -1L;
+        return false;
     }
 
     @Override
     public Integer findMark(Long courseId, Long userId) {
-        String sql = "SELECT mark FROM USER_STORE WHERE course_id=? AND user_id=?";
+        final String sql = "SELECT mark FROM USER_STORE WHERE course_id=? AND user_id=?";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, courseId);
@@ -93,11 +92,10 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, courseId);
             preparedStatement.setLong(2, userId);
-            int code = preparedStatement.executeUpdate();
-            if (code != -1) {
-                LOGGER.info("Student was removed from the course with id " + courseId);
-                return true;
-            }
+            preparedStatement.executeUpdate();
+            LOGGER.info("Student was removed from the course with id " + courseId);
+            return true;
+
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -108,15 +106,14 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
 
     @Override
     public boolean removeCourse(Long courseId) {
-        String sql = "DELETE FROM USER_STORE WHERE course_id=?";
+        final String sql = "DELETE FROM USER_STORE WHERE course_id=?";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, courseId);
-            int code = preparedStatement.executeUpdate();
-            if (code != -1) {
-                LOGGER.info("Course was removed " + courseId);
-                return true;
-            }
+            preparedStatement.executeUpdate();
+            LOGGER.info("Course was removed " + courseId);
+            return true;
+
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -125,23 +122,4 @@ public class MySqlUserStoreDAO implements UserStoreDAO {
         return false;
     }
 
-    @Override
-    public boolean findLecturer(Long userId) {
-        String sql = "SELECT * FROM USER_STORE WHERE user_id=?";
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, userId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    LOGGER.info("User was found " + userId);
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.warning("Exception: " + e.getMessage());
-        } finally {
-            ConnectionPool.getInstance().putBackConnection(connection);
-        }
-        return false;
-    }
 }

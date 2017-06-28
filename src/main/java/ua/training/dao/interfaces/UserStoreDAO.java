@@ -23,7 +23,7 @@ public interface UserStoreDAO {
      * @param userId userId of user
      * @return 1 if insertion was successful or -1 if not
      */
-    Long insertStudentIntoCourse(Long courseId, Long userId);
+    boolean insertStudentIntoCourse(Long courseId, Long userId);
 
     /**
      * Finds mark by courseId and userId
@@ -41,8 +41,12 @@ public interface UserStoreDAO {
      */
     boolean removeStudent(Long courseId, Long userId);
 
+    /**
+     * Removes course from user_store by courseId
+     * @param courseId courseId of course
+     * @return true if removing was successful or false if not
+     */
     boolean removeCourse(Long courseId);
 
-    boolean findLecturer(Long userId);
 
 }

@@ -4,8 +4,7 @@ package ua.training.command.implementation;
 import ua.training.command.Command;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
-import ua.training.service.RegisterService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +26,8 @@ public class RegisterCommand implements Command {
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME).trim();
         String surname= request.getParameter(SURNAME).trim();
-        RegisterService registerService = Service.getInstance().getRegisterService();
-        if (registerService.inputStudent(login, password, name, surname)) {
+        UserService userService = UserService.getInstance();
+        if (userService.inputStudent(login, password, name, surname)) {
             page = Config.getInstance().getProperty(Config.LOGIN);
         } else {
             request.setAttribute("error",

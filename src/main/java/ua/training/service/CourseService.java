@@ -40,8 +40,8 @@ public class CourseService {
 
         Course course = new Course();
         course.setNameCourse(nameCourse);
-        long courseId = courseDAO.insertCourse(course);
-        if (courseId == -1) {
+        boolean insertResult = courseDAO.insertCourse(course);
+        if (!insertResult) {
             return false;
         }
         Course findNewCourse = courseDAO.findCourseWithCourseName(nameCourse);
@@ -90,8 +90,8 @@ public class CourseService {
     }
 
     public boolean insertStudent(String courseId, String userId) {
-        return (userStoreDAO.insertStudentIntoCourse(Long.parseLong(courseId),
-                Long.parseLong(userId)) != -1);
+        return userStoreDAO.insertStudentIntoCourse(Long.parseLong(courseId),
+                Long.parseLong(userId));
     }
 
     private boolean checkNameCourse(String nameCourse) {

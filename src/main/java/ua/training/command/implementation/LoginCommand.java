@@ -6,8 +6,7 @@ import ua.training.command.HelperCommand;
 import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
-import ua.training.service.LoginService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +30,13 @@ public class LoginCommand implements Command {
         User user = null;
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
-        LoginService loginService = Service.getInstance().getLoginService();
-        HelperCommand commandHelper = HelperCommand.getInstance();
-        if ((user = loginService.findLecturer(login, password)) != null) {
-            commandHelper.setLecturerPage(session, user);
+        UserService userService = UserService.getInstance();
+        HelperCommand helperCommand = HelperCommand.getInstance();
+        if ((user = userService.findLecturer(login, password)) != null) {
+            helperCommand.setLecturerPage(session, user);
             page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
-        } else if ((user = loginService.findStudent(login, password)) != null) {
-            commandHelper.setStudentPage(session, user);
+        } else if ((user = userService.findStudent(login, password)) != null) {
+            helperCommand.setStudentPage(session, user);
             page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
         } else {
             request.setAttribute("error", Message.getInstance().getProperty(Message.LOGIN_ERROR));

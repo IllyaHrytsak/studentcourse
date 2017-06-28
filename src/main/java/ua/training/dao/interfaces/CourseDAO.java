@@ -22,9 +22,9 @@ public interface CourseDAO {
     /**
      * Inserts course into database
      * @param course Course
-     * @return courseId of our inserted course
+     * @return true if insertion was successful or false if not
      */
-    Long insertCourse(Course course);
+    boolean insertCourse(Course course);
 
     /**
      * Finds course by course id
@@ -61,6 +61,11 @@ public interface CourseDAO {
      */
     List<Course> findStudentCourses(Long userId);
 
+    /**
+     * Remove course from course table by courseId
+     * @param courseId courseId of course
+     * @return true if removing was successful or false if not
+     */
     boolean removeCourseByCourseId(Long courseId);
 
 

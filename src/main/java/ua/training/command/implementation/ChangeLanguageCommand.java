@@ -18,9 +18,9 @@ public class ChangeLanguageCommand implements Command {
         String language = request.getParameter("languageKey");
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
-            HelperCommand commandHelper = HelperCommand.getInstance();
+            HelperCommand helperCommand = HelperCommand.getInstance();
             request.getSession().setAttribute("language", language);
-            page = commandHelper.checkUser(request.getSession(), user);
+            page = helperCommand.checkUser(request.getSession(), user);
         } else {
             request.getSession().setAttribute("language", language);
             page = Config.getInstance().getProperty(Config.LOGIN);

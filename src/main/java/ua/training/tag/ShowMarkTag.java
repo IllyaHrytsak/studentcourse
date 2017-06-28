@@ -1,9 +1,7 @@
 package ua.training.tag;
 
 
-import ua.training.entity.Course;
 import ua.training.service.CourseService;
-import ua.training.service.Service;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
@@ -16,7 +14,7 @@ public class ShowMarkTag extends BodyTagSupport {
     private static final int ZERO = 0;
     private String userId;
     private String courseId;
-    private CourseService courseService = Service.getInstance().getCourseService();
+    private CourseService courseService = CourseService.getInstance();
     private static final Logger LOGGER = Logger.getLogger(ShowMarkTag.class.getSimpleName());
 
     public void setUserId(String userId) {

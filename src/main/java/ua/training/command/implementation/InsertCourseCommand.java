@@ -7,8 +7,7 @@ import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
 import ua.training.service.CourseService;
-import ua.training.service.LoginService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,15 +22,15 @@ public class InsertCourseCommand implements Command {
         String courseName = request.getParameter("newNameCourse");
         String userId = request.getParameter("userId");
         User user = (User) request.getSession().getAttribute("user");
-        CourseService courseService = Service.getInstance().getCourseService();
-        LoginService loginService = Service.getInstance().getLoginService();
+        CourseService courseService = CourseService.getInstance();
+        UserService userService = UserService.getInstance();
         if (user != null) {
-            HelperCommand commandHelper = HelperCommand.getInstance();
+            HelperCommand helperCommand = HelperCommand.getInstance();
             String login = user.getLogin();
             String password = user.getPassword();
             if (courseService.insertCourse(courseName, userId)) {
-                if ((user = loginService.findLecturer(login, password)) != null)
-                commandHelper.setLecturerPage(request.getSession(), user);
+                if ((user = userService.findLecturer(login, password)) != null)
+                helperCommand.setLecturerPage(request.getSession(), user);
                 page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
             } else {
                 request.getSession().setAttribute("error",

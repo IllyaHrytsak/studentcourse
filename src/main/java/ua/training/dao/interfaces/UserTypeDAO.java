@@ -21,7 +21,7 @@ public interface UserTypeDAO {
      * @param userType userType
      * @return userTypeId of inserted user type
      */
-    Long insertUserType(UserType userType);
+    boolean insertUserType(UserType userType);
 
     /**
      * Finds user type by userTypeId

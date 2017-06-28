@@ -26,7 +26,8 @@ public class MySqlUserDAO implements UserDAO {
     private static final long USER_TYPE_STUDENT = 2L;
     private static final Logger LOGGER = Logger.getLogger(MySqlUserDAO.class.getSimpleName());
 
-    private MySqlUserDAO() {}
+    private MySqlUserDAO() {
+    }
 
     public static synchronized MySqlUserDAO getInstance() {
         if (instance == null) {
@@ -41,7 +42,7 @@ public class MySqlUserDAO implements UserDAO {
         final String sql = "SELECT * FROM USER;";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 users.add(createUser(resultSet));
             }
@@ -55,7 +56,7 @@ public class MySqlUserDAO implements UserDAO {
     }
 
     @Override
-    public Long insertUser(User user) {
+    public boolean insertUser(User user) {
         final String sql = "INSERT INTO USER(login, password, name, surname, user_type_id) VALUES(?, ?, ?, ?, ?)";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
@@ -63,16 +64,16 @@ public class MySqlUserDAO implements UserDAO {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getName());
             preparedStatement.setString(4, user.getSurname());
-            preparedStatement.setLong(5,USER_TYPE_STUDENT);
+            preparedStatement.setLong(5, USER_TYPE_STUDENT);
             int userId = preparedStatement.executeUpdate();
             LOGGER.info("User was inserted " + user.getName());
-            return (long) userId;
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
-        return (long) -1;
+        return false;
     }
 
 
@@ -108,14 +109,12 @@ public class MySqlUserDAO implements UserDAO {
             preparedStatement.setString(3, user.getName());
             preparedStatement.setString(4, user.getSurname());
             preparedStatement.setLong(5, userId);
-            int i = preparedStatement.executeUpdate();
-            if (i != -1) {
-                LOGGER.info("User was updated " + user.getName());
-                return true;
-            }
+            preparedStatement.executeUpdate();
+            LOGGER.info("User was updated " + user.getName());
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
-        }  finally {
+        } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
         return false;
@@ -217,7 +216,6 @@ public class MySqlUserDAO implements UserDAO {
                     course.setCourseId(resultSet.getLong("course_id"));
                     course.setNameCourse(resultSet.getString("course_name"));
                     courses.add(course);
-                    LOGGER.info("Courses were added to user " + user.getLogin());
                 }
             }
         } catch (SQLException e) {
@@ -225,6 +223,7 @@ public class MySqlUserDAO implements UserDAO {
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
+        LOGGER.info("Courses were added to user " + user.getLogin());
         user.setCourseStore(courses);
     }
 
@@ -234,7 +233,7 @@ public class MySqlUserDAO implements UserDAO {
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             preparedStatement.setLong(1, userTypeId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     UserType userType = new UserType();
                     userType.setUserTypeName(resultSet.getString("user_type"));

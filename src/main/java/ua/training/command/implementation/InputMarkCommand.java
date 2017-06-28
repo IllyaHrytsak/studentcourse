@@ -6,8 +6,7 @@ import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
 import ua.training.service.CourseService;
-import ua.training.service.LoginService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,15 +27,15 @@ public class InputMarkCommand implements Command {
         String userId = request.getParameter(STUDENT_ID);
         String mark = request.getParameter(MARK);
         User user = (User) request.getSession().getAttribute("user");
-        CourseService courseService = Service.getInstance().getCourseService();
-        LoginService loginService = Service.getInstance().getLoginService();
+        CourseService courseService = CourseService.getInstance();
+        UserService userService = UserService.getInstance();
         if (user != null) {
             if (courseService.insertMark(courseId, userId, mark)) {
                 String login = user.getLogin();
                 String password = user.getPassword();
-                HelperCommand commandHelper = HelperCommand.getInstance();
-                user = loginService.findLecturer(login, password);
-                commandHelper.setLecturerPage(request.getSession(), user);
+                HelperCommand helperCommand = HelperCommand.getInstance();
+                user = userService.findLecturer(login, password);
+                helperCommand.setLecturerPage(request.getSession(), user);
                 page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
             } else {
             request.getSession().setAttribute("error",

@@ -7,7 +7,6 @@ import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
 import ua.training.service.CourseService;
-import ua.training.service.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +24,11 @@ public class RemoveCommand implements Command {
         String courseId = request.getParameter(COURSE_ID);
         String userId = request.getParameter(STUDENT_ID);
         User user = (User) request.getSession().getAttribute("user");
-        CourseService courseService = Service.getInstance().getCourseService();
+        CourseService courseService = CourseService.getInstance();
         if (user != null) {
-            HelperCommand commandHelper = HelperCommand.getInstance();
+            HelperCommand helperCommand = HelperCommand.getInstance();
             if (courseService.removeStudent(courseId, userId)) {
-                page = commandHelper.checkUser(request.getSession(), user);
+                page = helperCommand.checkUser(request.getSession(), user);
             } else {
                 request.setAttribute("error",
                         Message.getInstance().getProperty(Message.REMOVE_ERROR));

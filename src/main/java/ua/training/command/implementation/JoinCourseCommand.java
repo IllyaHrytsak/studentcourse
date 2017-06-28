@@ -7,8 +7,7 @@ import ua.training.entity.User;
 import ua.training.manager.Config;
 import ua.training.manager.Message;
 import ua.training.service.CourseService;
-import ua.training.service.LoginService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,15 +25,14 @@ public class JoinCourseCommand implements Command {
         String courseId = request.getParameter(COURSE_ID);
         String userId = request.getParameter(STUDENT_ID);
         User user = (User) request.getSession().getAttribute("user");
-        CourseService courseService = Service.getInstance().getCourseService();
-        LoginService loginService = Service.getInstance().getLoginService();
+        CourseService courseService = CourseService.getInstance();
+        UserService userService = UserService.getInstance();
         if (user != null) {
             String login = user.getLogin();
-            String password = user.getPassword();
-            HelperCommand commandHelper = HelperCommand.getInstance();
+            HelperCommand helperCommand = HelperCommand.getInstance();
             if (courseService.insertStudent(courseId, userId)) {
-                user = loginService.findStudent(login, password);
-                commandHelper.setStudentPage(request.getSession(), user);
+                user = userService.findStudentByLogin(login);
+                helperCommand.setStudentPage(request.getSession(), user);
                 page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
 
             } else {

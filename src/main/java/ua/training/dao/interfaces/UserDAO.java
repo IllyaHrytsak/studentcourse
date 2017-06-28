@@ -20,9 +20,9 @@ public interface UserDAO {
     /**
      * Tries to insert user in database
      * @param user User
-     * @return userId of inserted user
+     * @return true if insertion was successful or false if not
      */
-    Long insertUser(User user);
+    boolean insertUser(User user);
 
     /**
      * Finds user by userId

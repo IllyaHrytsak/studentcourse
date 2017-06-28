@@ -8,7 +8,7 @@ public class CourseServiceTest {
 
     @Test
     public void testWrongInputCourseName() {
-        CourseService courseService = Service.getInstance().getCourseService();
+        CourseService courseService = CourseService.getInstance();
         String courseId = "1";
         String courseName = "course name";
         boolean result = courseService.changeNameCourse(courseName, courseId);
@@ -17,7 +17,7 @@ public class CourseServiceTest {
 
     @Test
     public void testWrongInputMark() {
-        CourseService courseService = Service.getInstance().getCourseService();
+        CourseService courseService = CourseService.getInstance();
         String courseId = "1";
         String userId = "1";
         String mark = "7";

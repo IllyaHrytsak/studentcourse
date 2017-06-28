@@ -3,8 +3,7 @@ package ua.training.command;
 
 import ua.training.entity.User;
 import ua.training.manager.Config;
-import ua.training.service.LoginService;
-import ua.training.service.Service;
+import ua.training.service.UserService;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,31 +22,31 @@ public class HelperCommand {
     }
 
     public void setLecturerPage(HttpSession session, User user) {
-        LoginService loginService = Service.getInstance().getLoginService();
+        UserService userService = UserService.getInstance();
         session.setAttribute("user", user);
         session.setAttribute("courses", user.getCourseStore());
-        session.setAttribute("students", loginService.getStudentsWhereCourse(user.getCourseStore()));
+        session.setAttribute("students", userService.getStudentsWhereCourse(user.getCourseStore()));
     }
 
     public void setStudentPage(HttpSession session, User user) {
-        LoginService loginService = Service.getInstance().getLoginService();
+        UserService userService = UserService.getInstance();
         session.setAttribute("user", user);
         session.setAttribute("availableCourses",
-                loginService.getAvailableCourses());
+                userService.getAvailableCourses());
         session.setAttribute("studentCourses",
-                loginService.getStudentCourses(user.getUserId()));
+                userService.getStudentCourses(user.getUserId()));
     }
 
     public String checkUser(HttpSession session, User user) {
         String page = null;
-        LoginService loginService = Service.getInstance().getLoginService();
+        UserService userService = UserService.getInstance();
         String login = user.getLogin();
         String password = user.getPassword();
-        if ((user = loginService.findLecturer(login, password)) != null) {
+        if ((user = userService.findLecturer(login, password)) != null) {
             setLecturerPage(session, user);
             page = Config.getInstance().getProperty(Config.LECTURER_MAIN);
         } else {
-            user = loginService.findStudent(login, password);
+            user = userService.findStudentByLogin(login);
             setStudentPage(session, user);
             page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
         }

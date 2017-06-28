@@ -55,20 +55,20 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
     }
 
     @Override
-    public Long insertUserType(UserType userType) {
+    public boolean insertUserType(UserType userType) {
         final String sql = "INSERT INTO USER_TYPE(user_type) values(?);";
         Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, userType.getUserTypeName());
-            int code = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             LOGGER.info("User types was inserted " + userType.getUserTypeName());
-            return (long) code;
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
-        return -1L;
+        return false;
     }
 
     @Override
@@ -129,10 +129,8 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
             preparedStatement.setString(1, userType.getUserTypeName());
             preparedStatement.setLong(2, userTypedId);
             int code = preparedStatement.executeUpdate();
-            if (code != -1) {
-                LOGGER.info("User type was updated " + userType.getUserTypeName());
-                return true;
-            }
+            LOGGER.info("User type was updated " + userType.getUserTypeName());
+            return true;
         } catch (SQLException e) {
             LOGGER.warning("Exception: " + e.getMessage());
         } finally {
@@ -157,7 +155,6 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
                     user.setName(resultSet.getString("name"));
                     user.setSurname(resultSet.getString("surname"));
                     users.add(user);
-                    LOGGER.info("Users added to user type with name " + userType.getUserTypeName());
                 }
             }
         } catch (SQLException e) {
@@ -165,6 +162,7 @@ public class MySqlUserTypeDAO implements UserTypeDAO {
         } finally {
             ConnectionPool.getInstance().putBackConnection(connection);
         }
+        LOGGER.info("Users added to user type with name " + userType.getUserTypeName());
         userType.setUsers(users);
     }
 
