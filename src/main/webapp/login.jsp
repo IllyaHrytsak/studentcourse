@@ -36,6 +36,10 @@
     <fmt:message key="login.button.register" var="registerValue"/>
     <input type="button" value="${registerValue}" onClick='location.href="/register.jsp"'/>
 </form>
+<c:if test="${not empty error}">
+    <fmt:message key="${error}"/>
+</c:if>
+
 <div style="position: fixed; top: 2%; right: 2%;">
     <form name="languageForm" method="POST" action="/">
         <input type="hidden" name="command" value="changeLanguage"/>

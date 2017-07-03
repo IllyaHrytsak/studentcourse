@@ -11,7 +11,7 @@ public class CourseService {
 
     private static CourseService instance;
 
-    private static final String nameCourseRegex = "^[A-Z][a-z\\s]{1,34}|[А-ЯІЇЁ][а-яіїё\\s]{1,34}$";
+    private static final String nameCourseRegex = "^[A-Z][a-z\\s]{1,149}|[А-ЯІЇЁ][а-яіїё\\s]{1,149}$";
     private static final String markRegex = "^[1-5]$";
     private DAOFactory daoFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
     private CourseDAO courseDAO = daoFactory.getCourseDAO();

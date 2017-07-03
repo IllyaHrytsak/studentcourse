@@ -18,9 +18,9 @@ public class UserService {
     private static UserService instance;
     private static final Logger LOGGER = Logger.getLogger(UserService.class.getSimpleName());
 
-    private static final String loginRegex = "^[a-zA-Z][a-zA-Z0-9-_\\.]{1,34}$";
-    private static final String passwordRegex = "^[\\w-\\.]{2,34}$";
-    private static final String nameAndSurnameRegex = "^[A-Z][a-z]{1,34}|[А-ЯІЇЁЄ][а-яіїёє]{1,34}$";
+    private static final String loginRegex = "^[a-zA-Z][a-zA-Z0-9-_\\.]{1,149}$";
+    private static final String passwordRegex = "^[\\w-\\.]{2,50}$";
+    private static final String nameAndSurnameRegex = "^[A-Z][a-z]{1,149}|[А-ЯІЇЁЄ][а-яіїёє]{1,149}$";
     private DAOFactory daoFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
     private UserDAO userDao = daoFactory.getUserDAO();
     private CourseDAO courseDAO = daoFactory.getCourseDAO();

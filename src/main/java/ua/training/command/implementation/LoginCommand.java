@@ -40,7 +40,7 @@ public class LoginCommand implements Command {
             page = Config.getInstance().getProperty(Config.STUDENT_MAIN);
         } else {
             request.setAttribute("error", Message.getInstance().getProperty(Message.LOGIN_ERROR));
-            page = Config.getInstance().getProperty(Config.ERROR);
+            page = Config.getInstance().getProperty(Config.LOGIN);
         }
 
         return page;
